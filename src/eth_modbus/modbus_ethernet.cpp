@@ -1,7 +1,3 @@
-/*
-    ModbusEthernet.cpp - Source for Modbus IP Library
-    Copyright (C) 2015 André Sarmento Barbosa
-*/
 #include "modbus_ethernet.h"
 
 ModbusEthernet::ModbusEthernet() : _server (MODBUSIP_PORT) {

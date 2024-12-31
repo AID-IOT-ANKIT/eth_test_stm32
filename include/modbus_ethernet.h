@@ -1,7 +1,3 @@
-/*
-    ModbusEthernet.h - Header for Modbus IP Library
-    Copyright (C) 2015 André Sarmento Barbosa
-*/
 #include <Arduino.h>
 #include <Modbus.h>
 #include <STM32Ethernet.h>
