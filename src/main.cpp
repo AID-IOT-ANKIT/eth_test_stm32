@@ -28,6 +28,7 @@ void setup()
 
   mb.config(mac);
 
+  // 32 bit float registers 16 bit each
   mb.addHreg(HREG, 0x0000);
   mb.addHreg(HREG + 1, 0x0000);
 
@@ -48,7 +49,8 @@ void loop()
   uint32_t n = (regVal << 16) | regVal2;
   float *newRotationAngle = (float *)&n;
 
-  if(*newRotationAngle != rotationAngle) {
+  if (*newRotationAngle != rotationAngle)
+  {
     rotationAngle = *newRotationAngle;
     rotateToAngle(rotationAngle);
   }
