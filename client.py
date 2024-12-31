@@ -80,12 +80,12 @@ SERVER_IP = "192.168.1.184"  # STM32 Modbus TCP IP
 SERVER_PORT = 502            # Default Modbus TCP port
 
 # Register details
-REGISTER_START = 100  # Starting register address
+REGISTER_START = 0x22  # Starting register address
 SLAVE_ID = 1          # Unit ID of the Modbus device
 
 
 def write_float_to_register(client: ModbusTcpClient, address, value):
-    payload = client.convert_to_registers(value=value, data_type=client.DATATYPE.FLOAT32, word_order="big")
+    payload = client.convert_to_registers(value=value, data_type=client.DATATYPE.FLOAT32)
 
     logger.info(f"Angle = {value}")
 
