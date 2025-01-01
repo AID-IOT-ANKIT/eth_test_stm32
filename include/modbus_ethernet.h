@@ -31,6 +31,8 @@ class ModbusEthernet : public Modbus {
        Newer Arduino Ethernet Shields include a sticker with the device's
        MAC address. For older shields, choose your own.
     */
+
+   void config();
     void config (uint8_t * mac);
     /**
        @brief Connect a ModbusEthernet object to a network

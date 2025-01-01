@@ -3,6 +3,13 @@
 ModbusEthernet::ModbusEthernet() : _server (MODBUSIP_PORT) {
 }
 
+void ModbusEthernet::config() {
+  Ethernet.begin();
+  _server.begin();
+
+  Serial.println(Ethernet.localIP());
+}
+
 void ModbusEthernet::config (uint8_t * mac) {
   Ethernet.begin (mac);
   _server.begin();

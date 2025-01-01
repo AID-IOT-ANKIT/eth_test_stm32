@@ -76,7 +76,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Modbus TCP")
 
 # Server details
-SERVER_IP = "192.168.1.184"  # STM32 Modbus TCP IP
+SERVER_IP = "192.168.1.183"  # STM32 Modbus TCP IP
 SERVER_PORT = 502            # Default Modbus TCP port
 
 # Register details
@@ -97,7 +97,7 @@ def write_float_to_register(client: ModbusTcpClient, address, value):
 
 
 def read_float_from_register(client: ModbusTcpClient, address):
-    response = client.read_holding_registers(REGISTER_START, count=2, slave=1)
+    response = client.read_holding_registers(address=address, count=2, slave=1)
 
     if response.isError():
         logger.error(f"Error reading from register {address}: {response}")
@@ -128,19 +128,34 @@ def read_test(client: ModbusTcpClient, expectedValue: float):
         finally:
             client.close()
 
+def read_magnetic_north_value(client: ModbusTcpClient):
+    if not client.connect():
+        logger.error(f"Failed to connect to Modbus server at {SERVER_IP}:{SERVER_PORT}")
+    else:
+        try:
+            value = read_float_from_register(client=client,address=0x30)
+            logger.info(f"Magnetic North: {value}")
+        finally:
+            client.close()
+
 # Test angles
-angles = [-180.5, -90.25, -45.5, 0.0, 45.5, 90.25, 180.5]
+# angles = [-180.5, -90.25, -45.5, 0.0, 45.5, 90.25, 180.5]
+
+angles = [20]
 
 if __name__ == "__main__":
-    client = ModbusTcpClient(SERVER_IP, port=SERVER_PORT)
+    client = ModbusTcpClient(SERVER_IP, port=SERVER_PORT,timeout=30)
     logger.info("Rotation Test")
     for angle in angles:
         rotate_to_angle(client=client,value=angle)
-        sleep(1)
+        sleep(3)
     
     # check for last value
-    print()
-    logger.info("Read Test")
-    read_test(client=client,expectedValue=angles[-1])
+    # print()
+    # logger.info("Read Test")
+    # read_test(client=client,expectedValue=0.0)
+    # sleep(5)
+
+    read_magnetic_north_value(client=client);
     
 
